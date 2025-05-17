@@ -3,3 +3,4 @@ tfidf_vocabulary.txt
 wiki_movie_plots_deduped.csv
 /models
 /__pycache__
+/wiki_movie_plots_deduped_updated.csv

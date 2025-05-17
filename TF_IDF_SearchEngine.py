@@ -57,11 +57,14 @@ class TF_IDF_SearchEngine:
     def create_tfidf_vectorizer(self):
 
         if self.vectorizer is None:
-            self.tfidf_vectorizer = TfidfVectorizer(preprocessor=self.preprocess_text,min_df=2,max_df=0.85)
+
+            self.vectorizer = TfidfVectorizer(preprocessor=self.preprocess_text,min_df=2,max_df=0.85)
 
             self.tfidf_matrix = self.vectorizer.fit_transform(self.df['Plot'])
 
-            self.tfidf_features = self.vectorizer.get_feature_names_out()
+            self.features = self.vectorizer.get_feature_names_out()
+
+            print("TF-IDF vectorizer created with {} features.".format(len(self.features)))
         else:
             raise ValueError("TF-IDF vectorizer is already created. Please create it only once.")
         
@@ -84,7 +87,9 @@ class TF_IDF_SearchEngine:
                 self.inverted_index[term].append((doc_idx, tf_idf_score))
 
         for term in self.inverted_index:
-            self.inverted_index[term].sort(key=lambda x: x[1], reverse=True)    
+            self.inverted_index[term].sort(key=lambda x: x[1], reverse=True)   
+
+        print("Inverted index created with {} terms.".format(len(self.inverted_index)))
 
     # Search the inverted index for a given query
     def search_inverted_index(self,query,top_k=10,depth=None,term_count_score=0.0):
@@ -131,3 +136,21 @@ class TF_IDF_SearchEngine:
             results.append((doc_id,self.df.iloc[doc_id]['Title'], self.df.iloc[doc_id]['Plot'], score, similarity))
         
        return results
+    
+
+# Save the TF_IDF_SearchEngine object to a pickle file
+    
+if __name__ == "__main__":
+
+    df = pd.read_csv('wiki_movie_plots_deduped_updated.csv')
+    search_engine = TF_IDF_SearchEngine(df)
+    search_engine.create_tfidf_vectorizer()
+    search_engine.create_inverted_index()
+
+    results = search_engine.search("jack and the beanstalk", top_k=10)
+    for doc_id,title, plot ,score, similarity in results:
+        print(f"Document ID: {doc_id}, Title: {title}, Score: {score:.4f}, Similarity: {similarity:.4f}, Plot: {plot[:50]}...")
+
+    with open('tfidf_search_engine.pkl', 'wb') as f:
+        pickle.dump(search_engine, f)
+
