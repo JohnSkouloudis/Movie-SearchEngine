@@ -128,6 +128,7 @@ class TF_IDF_SearchEngine:
         return results[:top_k]
     
     # Use the search_inverted_index method to search for a query and return the title and plot of the top_k results
+    # The search method returns a list of tuples (doc_id, title, plot, score, similarity)
     def search(self,query,top_k=10,depth=None,term_count_score=0.0):
 
        searches = self.search_inverted_index(query,top_k,depth,term_count_score)
