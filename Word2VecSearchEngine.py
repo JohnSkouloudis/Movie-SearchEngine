@@ -96,6 +96,10 @@ class Word2VecSearchEngine:
     # Search the FAISS index
     def search_faiss_index(self,query, top_k=10):
 
+        if self.index is None:
+            print("Index has not been created yet. Please create the index first.")
+            return []
+
         query_vector = self.get_plot_vector(query)
         query_vector = query_vector.astype('float32')
         query_vector = query_vector.reshape(1, -1)
@@ -111,7 +115,11 @@ class Word2VecSearchEngine:
     
     # returns a list of tuples (doc_id, title, plot, distance)
     def search(self,query, top_k=10):
-        self.create_faiss_index()
+
+        if self.index is None:
+            print("Index has not been created yet. Please create the index first.")
+            return []
+
         answers = self.search_faiss_index(query, top_k)
 
         results = []
@@ -122,19 +130,8 @@ class Word2VecSearchEngine:
     
 
 
-# Save the Word2VecSearchEngine object to a pickle file
 
-if __name__ == "__main__":
-    
-    df = pd.read_csv('wiki_movie_plots_deduped_updated.csv')
-    search_engine = Word2VecSearchEngine(model_path='models/GoogleNews-vectors-negative300.bin',df=df)
-    search_engine.create_faiss_index()
 
-    results = search_engine.search("jack and the beanstalk", top_k=10)
-    for doc_id,title, plot,distance in results:
-        print(f"Document ID: {doc_id}, Title: {title}, Distance: {distance:.4f}, Plot: {plot[:50]}...")
 
-    with open('word2vec_search_engine.pkl', 'wb') as f:
-        pickle.dump(search_engine, f)
 
     
