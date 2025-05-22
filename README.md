@@ -53,11 +53,11 @@ You can download it directly and place the CSV file in the project root.
 
 <pre>
 Movie-SearchEngine/ 
- ├── NLP_SearchEngine.ipynb 
- ├── TF_IDF_SearchEngine.py 
- ├── Word2VecSearchEngine.py 
- ├── BertSearchEngine.py │    
- ├── requirements.txt 
+ ├── NLP_SearchEngine.ipynb  : Notebook that explains the steps for each task
+ ├── TF_IDF_SearchEngine.py  : Implementation of TF_IDF_SearchEngine class
+ ├── Word2VecSearchEngine.py : Implementation of Word2VecSearchEngine class
+ ├── BertSearchEngine.py     : Implementation of BertSearchEngine class
+ ├── requirements.txt        : libraries used in the project
  ├── README.md 
  └── .gitignore </pre>
 
