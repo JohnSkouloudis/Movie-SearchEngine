@@ -25,7 +25,9 @@ class BertSearchEngine:
         if self.index is not None:
             raise ValueError("Index already exists. Please delete the existing index before creating a new one.")
         
-        self.index = faiss.IndexFlatIP(768)
+        vector_size = self.get_bert_embedding(self.df['Plot'][0]).shape[0]
+
+        self.index = faiss.IndexFlatIP(vector_size)
 
         for plot in self.df['Plot']:
             plot_embedding = self.get_bert_embedding(plot,self.model)
