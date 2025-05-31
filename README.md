@@ -21,7 +21,7 @@ This project implements multiple IR and NLP techniques to build a movie-plot sea
 - **Word2Vec** semantic similarity search  
 - **BERT** embeddings for deep semantic retrieval  
 
-Originally created for an IR & NLP university course, it showcases end‑to‑end data preprocessing, indexing, and querying pipelines. 
+
 
 ## Dataset
 
@@ -39,7 +39,7 @@ You can download it directly and place the CSV file in the project root.
 
 - Python 3.x  
 - Jupyter Notebook  
-- Libraries: `scikit-learn`, `gensim`, `transformers`, `pandas`, `numpy` ,`faiss`,`os`,`time`,`re`,`nltk`,`pickle`
+- Libraries: `scikit-learn`, `gensim`, `sentence-transformers`, `pandas`, `numpy` ,`faiss`,`os`,`time`,`re`,`nltk`,`pickle`
 
 ## Tasks
 
